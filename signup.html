@@ -16,23 +16,35 @@
   <div class="layer"></div>
 <main class="page-center">
   <article class="sign-up">
-    <h1 class="sign-up__title">Get started</h1>
+    <h1 class="sign-up__title">Agent Sign Up</h1>
     <p class="sign-up__subtitle">Create an account to get started</p>
     <form class="sign-up-form form" action="" method="">
       <label class="form-label-wrapper">
-        <p class="form-label">Name</p>
-        <input class="form-input" type="text" placeholder="Enter your name" required>
+        <p class="form-label">Full Name</p>
+        <input name="name" class="form-input" type="text" placeholder="Enter your Full name" required>
       </label>
       <label class="form-label-wrapper">
         <p class="form-label">Email</p>
-        <input class="form-input" type="email" placeholder="Enter your email" required>
+        <input name="email" class="form-input" type="email" placeholder="Enter your Email" required>
       </label>
       <label class="form-label-wrapper">
-        <p class="form-label">Password</p>
-        <input class="form-input" type="password" placeholder="Enter your password" required>
+        <p class="form-label">Address</p>
+        <input name="address" class="form-input" type="text" placeholder="Enter your Address" required>
+      </label>
+      <label class="form-label-wrapper">
+        <p class="form-label">City</p>
+        <input name="city" class="form-input" type="text" placeholder="Enter your City" required>
+      </label>
+      <label class="form-label-wrapper">
+        <p class="form-label">State</p>
+        <input name="state" class="form-input" type="text" placeholder="Enter your State" required>
+      </label>
+      <label class="form-label-wrapper">
+        <p class="form-label">Local Government</p>
+        <input name="localgovernment" class="form-input" type="text" placeholder="Enter your Local government" required>
       </label>
       <br>
-      <button class="form-btn primary-default-btn transparent-btn">Register</button>
+      <button name="submit" class="form-btn primary-default-btn transparent-btn">Register</button>
     </form>
   </article>
 </main>
