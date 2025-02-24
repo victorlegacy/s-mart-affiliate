@@ -1,10 +1,25 @@
 <?php
 session_start();
+require 'config.php'; // Database connection
 
-// Check if user is logged in
-if (!isset($_SESSION['user_id'])) {
+// Ensure user is logged in
+if (!isset($_SESSION['agent_email'])) {
   header("Location: signin.php");
   exit();
+}
+
+$agent_id = $_SESSION['agent_email']; // Use 'agent_id' instead of 'user_id'
+
+try {
+  $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
+  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+  $stmt = $pdo->prepare("SELECT agent_code FROM agents WHERE email = ?");
+  $stmt->execute([$agent_id]);
+  $payment_link = $stmt->fetchColumn();
+
+} catch (PDOException $e) {
+  die("Database error: " . $e->getMessage());
 }
 ?>
 
@@ -150,7 +165,7 @@ if (!isset($_SESSION['user_id'])) {
                 </li>
 
                 <li>
-                  <a class="danger" href="##">
+                  <a class="danger" href="logout.php">
                     <i data-feather="log-out" aria-hidden="true"></i>
                     <span>Log out</span>
                   </a>
@@ -195,9 +210,29 @@ if (!isset($_SESSION['user_id'])) {
                   <i data-feather="feather" aria-hidden="true"></i>
                 </div>
                 <div class="stat-cards-info">
-                  <p class="stat-cards-info__num">https://smart0.com</p>
-                  <p class="stat-cards-info__title">Payment Link</p>
+                  <p class="stat-cards-info__title">Copy referral link</p>
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <input type="text" id="referralLink"
+                      value="http://agent.s-martpos.com/?code=<?php echo strtolower(htmlspecialchars($payment_link ?? 'N/A')); ?>"
+                      readonly
+                      style="border: none; background: transparent; font-size: 14px; width: 100%; cursor: default;">
+                    <button onclick="copyReferralLink()"
+                      style="padding: 5px 10px; font-size: 12px; background: #4CAF50; color: white; border: none; cursor: pointer;">Copy</button>
+                  </div>
                 </div>
+
+                <script>
+                  function copyReferralLink() {
+                    var copyText = document.getElementById("referralLink");
+                    copyText.select();
+                    copyText.setSelectionRange(0, 99999); // For mobile devices
+                    document.execCommand("copy");
+
+                    // Show confirmation
+                    alert("Referral link copied: " + copyText.value);
+                  }
+                </script>
+
               </article>
             </div>
           </div>

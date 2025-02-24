@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'config.php'; // Include database connection
+require 'config.php'; // Database connection
 
 $errorMessage = "";
 
@@ -23,11 +23,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
       if ($user && password_verify($password, $user['password'])) {
+        // Start the session and set session variables
         $_SESSION['agent_id'] = $user['id'];
+        $_SESSION['agent_email'] = $email;
         $_SESSION['agent_name'] = $user['name'];
 
+        // Debugging: Check if session is set
+
         echo "<script>alert('Login successful!'); window.location.href = 'index.php';</script>";
+
+
+        var_dump($_SESSION);
         exit;
+
+
       } else {
         $errorMessage = "Invalid email or password.";
       }
@@ -36,6 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
   }
 }
+
 ?>
 
 
