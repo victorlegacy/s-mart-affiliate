@@ -66,6 +66,9 @@ try {
     margin-left: 10px !important;
     margin-top: 10px !important;
   }
+  .mt-2{
+    margin-top: 5vh;
+  }
 </style>
 
 <body>
@@ -89,11 +92,11 @@ try {
         <div class="sidebar-body">
           <ul class="sidebar-body-menu">
             <li>
-              <a class="active" href="/"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
+              <a class="active" href="index.php"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
             </li>
             <li>
               <a class="show-cat-btn" href="##">
-                <span class="icon document" aria-hidden="true"></span>Withdrawal
+                <span class="icon dollar" aria-hidden="true"></span>Withdrawal
                 <span class="category__btn transparent-btn" title="Open list">
                   <span class="sr-only">Open list</span>
                   <span class="icon arrow-down" aria-hidden="true"></span>
@@ -126,6 +129,7 @@ try {
           <div class="sidebar-user-info">
             <span class="sidebar-user__title">Nafisa Sh.</span>
           </div>
+          <a class="btn btn-danger"> Logout</a>
         </a>
       </div>
     </aside>
@@ -180,40 +184,40 @@ try {
         <div class="container">
           <h2 class="main-title">Dashboard</h2>
           <div class="row stat-cards">
-            <div class="col-md-6 col-xl-4">
+            <div class="col-md-6 col-xl-4  mt-2">
               <article class="stat-cards-item">
                 <div class="stat-cards-icon warning">
-                  <i data-feather="file" aria-hidden="true"></i>
+                <i data-feather="credit-card" aria-hidden="true"></i>
                 </div>
                 <div class="stat-cards-info">
-                  <p class="stat-cards-info__num">₦50000</p>
+                  <p class="stat-cards-info__num">₦ <span>0</span></p>
                   <p class="stat-cards-info__title">Total Balance</p>
                 </div>
               </article>
             </div>
-            <div class="col-md-6 col-xl-4">
+            <div class="col-md-6 col-xl-4  mt-2">
               <article class="stat-cards-item">
                 <div class="stat-cards-icon purple">
-                  <i data-feather="file" aria-hidden="true"></i>
+                  <i data-feather="send" ></i>
                 </div>
                 <div class="stat-cards-info">
-                  <p class="stat-cards-info__num">14</p>
+                  <p class="stat-cards-info__num"><span>0</span></p>
                   <p class="stat-cards-info__title">
                     Total Withdrawal Request
                   </p>
                 </div>
               </article>
             </div>
-            <div class="col-md-6 col-xl-4">
-              <article class="stat-cards-item">
+            <div class="col-md-6 col-xl-4  mt-2">
+              <article class="stat-cards-item ">
                 <div class="stat-cards-icon success">
-                  <i data-feather="feather" aria-hidden="true"></i>
+                  <i data-feather="link" aria-hidden="true"></i>
                 </div>
                 <div class="stat-cards-info">
                   <p class="stat-cards-info__title">Copy referral link</p>
                   <div style="display: flex; align-items: center; gap: 10px;">
                     <input type="text" id="referralLink"
-                      value="http://agent.s-martpos.com/?code=<?php echo strtolower(htmlspecialchars($payment_link ?? 'N/A')); ?>"
+                      value="https://s-martagent.onatechngc.com?code=<?php echo strtolower(htmlspecialchars($payment_link ?? 'N/A')); ?>"
                       readonly
                       style="border: none; background: transparent; font-size: 14px; width: 100%; cursor: default;">
                     <button onclick="copyReferralLink()"
