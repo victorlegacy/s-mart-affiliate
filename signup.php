@@ -71,8 +71,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>S-MART Affiliate Dashboard | Sign Up</title>
-  <link rel="shortcut icon" href="./img/svg/logo.svg" type="image/x-icon">
+  <title>S-MART Agent Dashboard | Sign Up</title>
+  <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
   <link rel="stylesheet" href="./css/style.min.css">
 </head>
 
@@ -84,8 +84,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       width: 600px;
     }
   }
-</style>
-
+ 
+    .bright-text{
+      color: #FF7602;
+    }
+    .dark-text{
+      color: #07048A;
+    }
+    .bright-bg{
+      background-color: #FF7602;
+    }
+    .dark-bg{
+      background: #07048A !important;
+    }
+  </style>
 <body>
 
 
@@ -93,6 +105,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <main class="page-center">
 
     <article class="sign-up">
+    <img src="img/logo-dark.png" alt="" width="120vw">
+    <hr>
       <h1 class="sign-up__title">Agent Sign Up</h1>
       <p style="text-align: center !important; color:gray">Create an account to get started as an agent</p>
 
@@ -139,7 +153,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </label>
 
         <br>
-        <button name="submit" type="submit" class="form-btn primary-default-btn transparent-btn">Register</button>
+        <button name="submit" type="submit" class="form-btn primary-default-btn transparent-btn dark-bg">Register</button>
       </form>
     </article>
   </main>

@@ -131,7 +131,7 @@ try {
             </li>
             <li>
               <a class="show-cat-btn" href="##">
-                <span class="icon dollar" aria-hidden="true"></span>Withdrawal
+              <i data-feather="arrow-down-circle" aria-hidden="true" class="icon"></i> Withdrawal
                 <span class="category__btn transparent-btn" title="Open list">
                   <span class="sr-only">Open list</span>
                   <span class="icon arrow-down" aria-hidden="true"></span>
@@ -238,7 +238,7 @@ try {
             <div class="col-md-6 col-xl-4  mt-2">
               <article class="stat-cards-item">
                 <div class="stat-cards-icon purple">
-                  <i data-feather="send" ></i>
+                  <i data-feather="arrow-down-circle" ></i>
                 </div>
                 <div class="stat-cards-info">
                   <p class="stat-cards-info__num"><?php echo $total_withdrawals ?></p>

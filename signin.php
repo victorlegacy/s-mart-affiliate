@@ -56,19 +56,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>S-MART Affiliate Dashboard | Sign In</title>
+  <title>S-MART Agent Dashboard | Sign In</title>
   <!-- Favicon -->
-  <link rel="shortcut icon" href="./img/svg/logo.svg" type="image/x-icon">
+  <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
   <!-- Custom styles -->
   <link rel="stylesheet" href="./css/style.min.css">
+  <style>
+    .bright-text{
+      color: #FF7602;
+    }
+    .dark-text{
+      color: #07048A;
+    }
+    .bright-bg{
+      background-color: #FF7602;
+    }
+    .dark-bg{
+      background: #07048A !important;
+    }
+  </style>
 </head>
 
 <body>
   <div class="layer"></div>
   <main class="page-center">
     <article class="sign-up">
-      <h1 class="sign-up__title">Welcome back!</h1>
-      <p class="sign-up__subtitle">Sign in to your account to continue</p>
+    <img src="img/logo-dark.png" alt="" width="120vw">
+    <hr>
+      <h1 class="sign-up__title">Agent Signin</h1>
+      <!-- <p class="sign-up__subtitle">Sign in to your agent account to continue</p> -->
+    
       <?php if (!empty($errorMessage)) {
         echo "<p style='color:red;'>$errorMessage</p>";
       } ?>
@@ -83,8 +100,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <input class="form-input" type="password" name="password" placeholder="Enter your password" required>
         </label>
         <br>
-        <button class="form-btn primary-default-btn transparent-btn">Sign in</button>
+        <button class="form-btn primary-default-btn transparent-btn dark-bg">Sign in</button>
       </form>
+      <br>
+      <span>No account yet? <a class="bright-text" href="signup.php">Get Started </a></span>
     </article>
   </main>
   <!-- Chart library -->

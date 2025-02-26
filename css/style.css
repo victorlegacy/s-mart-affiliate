@@ -3230,7 +3230,7 @@ label {
 }
 
 .sign-up__title {
-  font-size: 32px;
+  font-size: 22px;
   line-height: 1.06;
   text-align: center;
   letter-spacing: 1px;
@@ -3241,7 +3241,7 @@ label {
 .sign-up__subtitle {
   max-width: 424px;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 25px;
   line-height: 1.2;
   text-align: center;
   color: #767676;
