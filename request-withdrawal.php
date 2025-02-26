@@ -207,19 +207,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               </button>
               <ul class="users-item-dropdown nav-user-dropdown dropdown">
                 <li>
-                  <a href="##">
+                  <a href="profile,php">
                     <i data-feather="user" aria-hidden="true"></i>
                     <span>Profile</span>
                   </a>
                 </li>
+
                 <li>
-                  <a href="##">
-                    <i data-feather="settings" aria-hidden="true"></i>
-                    <span>Account settings</span>
-                  </a>
-                </li>
-                <li>
-                  <a class="danger" href="##">
+                  <a class="danger" href="logout.php">
                     <i data-feather="log-out" aria-hidden="true"></i>
                     <span>Log out</span>
                   </a>

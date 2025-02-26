@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'config.php'; // Database connection
+require 'config.php'; // Ensure 'config.php' contains the correct DB credentials
 
 // Ensure user is logged in
 if (!isset($_SESSION['agent_email'])) {
@@ -8,21 +8,31 @@ if (!isset($_SESSION['agent_email'])) {
   exit();
 }
 
-$agent_id = $_SESSION['agent_email']; // Use 'agent_id' instead of 'user_id'
+$agent_email = $_SESSION['agent_email'];
 $agent_name = $_SESSION['agent_name'];
 
 try {
+  // Create a PDO connection
   $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+  // Fetch the agent's payment link (agent_code)
   $stmt = $pdo->prepare("SELECT agent_code FROM agents WHERE email = ?");
-  $stmt->execute([$agent_id]);
+  $stmt->execute([$agent_email]);
   $payment_link = $stmt->fetchColumn();
+
+  // Fetch the total number of withdrawals for the agent
+  $stmt = $pdo->prepare("SELECT COUNT(*) AS total_withdrawals FROM agents_withdrawal WHERE agent_email = ?");
+  $stmt->execute([$agent_email]);
+  $total_withdrawals = $stmt->fetchColumn();
 
 } catch (PDOException $e) {
   die("Database error: " . $e->getMessage());
 }
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -231,7 +241,7 @@ try {
                   <i data-feather="file" aria-hidden="true"></i>
                 </div>
                 <div class="stat-cards-info">
-                  <p class="stat-cards-info__num">14</p>
+                  <p class="stat-cards-info__num"><?php echo $total_withdrawals ?></p>
                   <p class="stat-cards-info__title">
                     Total Withdrawal Request
                   </p>
