@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'config.php'; // Database connection
+require 'config.php'; // Ensure 'config.php' contains the correct DB credentials
 
 // Ensure user is logged in
 if (!isset($_SESSION['agent_email'])) {
@@ -8,20 +8,31 @@ if (!isset($_SESSION['agent_email'])) {
   exit();
 }
 
-$agent_id = $_SESSION['agent_email']; // Use 'agent_id' instead of 'user_id'
+$agent_email = $_SESSION['agent_email'];
+$agent_name = $_SESSION['agent_name'];
 
 try {
+  // Create a PDO connection
   $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+  // Fetch the agent's payment link (agent_code)
   $stmt = $pdo->prepare("SELECT agent_code FROM agents WHERE email = ?");
-  $stmt->execute([$agent_id]);
+  $stmt->execute([$agent_email]);
   $payment_link = $stmt->fetchColumn();
+
+  // Fetch the total number of withdrawals for the agent
+  $stmt = $pdo->prepare("SELECT COUNT(*) AS total_withdrawals FROM agents_withdrawal WHERE agent_email = ?");
+  $stmt->execute([$agent_email]);
+  $total_withdrawals = $stmt->fetchColumn();
 
 } catch (PDOException $e) {
   die("Database error: " . $e->getMessage());
 }
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -66,8 +77,32 @@ try {
     margin-left: 10px !important;
     margin-top: 10px !important;
   }
-  .mt-2{
-    margin-top: 5vh;
+
+  .sidebar-user-container {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    /* Prevents wrapping */
+    overflow: hidden;
+    /* Ensures overflow is hidden */
+    max-width: 200px;
+    /* Set a max width to control layout */
+  }
+
+  .sidebar-user-icon {
+    color: white;
+    flex-shrink: 0;
+    /* Prevents the icon from shrinking */
+    margin-right: 8px;
+    /* Adds some space between the icon and the name */
+  }
+
+  .sidebar-user-info {
+    flex-grow: 1;
+    /* Allows the name to take available space */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Adds '...' if the name is too long */
   }
 </style>
 
@@ -115,21 +150,26 @@ try {
               <a href="profile.php"><i data-feather="user" aria-hidden="true" class="icon"></i>
                 Profile</a>
             </li>
+            <li>
+              <a href="logout.php"><i data-feather="log-out" aria-hidden="true" class="icon"></i></i>
+                Logout</a>
+            </li>
           </ul>
         </div>
       </div>
       <div class="sidebar-footer">
-        <a href="##" class="sidebar-user">
-          <span class="sidebar-user-img">
-            <picture>
-              <source srcset="./img/avatar/avatar-illustrated-01.webp" type="image/webp" />
-              <img src="./img/avatar/avatar-illustrated-01.png" alt="User name" />
-            </picture>
-          </span>
-          <div class="sidebar-user-info">
-            <span class="sidebar-user__title">Nafisa Sh.</span>
+        <a href="##" class="sidebar-user" style="padding: 10px;">
+          <!-- <span class="sidebar-user-img"> -->
+          <!-- </span> -->
+          <div class="sidebar-user-container">
+            <i data-feather="user" aria-hidden="true" class="sidebar-user-icon"></i>
+            <div class="sidebar-user-info">
+              <span class="sidebar-user__title">
+                <?php echo htmlspecialchars($agent_name); ?>
+              </span>
+            </div>
           </div>
-          <a class="btn btn-danger"> Logout</a>
+
         </a>
       </div>
     </aside>
@@ -201,7 +241,7 @@ try {
                   <i data-feather="send" ></i>
                 </div>
                 <div class="stat-cards-info">
-                  <p class="stat-cards-info__num"><span>0</span></p>
+                  <p class="stat-cards-info__num"><?php echo $total_withdrawals ?></p>
                   <p class="stat-cards-info__title">
                     Total Withdrawal Request
                   </p>
