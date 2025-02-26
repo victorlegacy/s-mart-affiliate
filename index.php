@@ -9,6 +9,7 @@ if (!isset($_SESSION['agent_email'])) {
 }
 
 $agent_id = $_SESSION['agent_email']; // Use 'agent_id' instead of 'user_id'
+$agent_name = $_SESSION['agent_name'];
 
 try {
   $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
@@ -66,6 +67,33 @@ try {
     margin-left: 10px !important;
     margin-top: 10px !important;
   }
+
+  .sidebar-user-container {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    /* Prevents wrapping */
+    overflow: hidden;
+    /* Ensures overflow is hidden */
+    max-width: 200px;
+    /* Set a max width to control layout */
+  }
+
+  .sidebar-user-icon {
+    color: white;
+    flex-shrink: 0;
+    /* Prevents the icon from shrinking */
+    margin-right: 8px;
+    /* Adds some space between the icon and the name */
+  }
+
+  .sidebar-user-info {
+    flex-grow: 1;
+    /* Allows the name to take available space */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Adds '...' if the name is too long */
+  }
 </style>
 
 <body>
@@ -89,7 +117,7 @@ try {
         <div class="sidebar-body">
           <ul class="sidebar-body-menu">
             <li>
-              <a class="active" href="/"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
+              <a class="active" href="index.php"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
             </li>
             <li>
               <a class="show-cat-btn" href="##">
@@ -112,20 +140,26 @@ try {
               <a href="profile.php"><i data-feather="user" aria-hidden="true" class="icon"></i>
                 Profile</a>
             </li>
+            <li>
+              <a href="logout.php"><i data-feather="log-out" aria-hidden="true" class="icon"></i></i>
+                Logout</a>
+            </li>
           </ul>
         </div>
       </div>
       <div class="sidebar-footer">
-        <a href="##" class="sidebar-user">
-          <span class="sidebar-user-img">
-            <picture>
-              <source srcset="./img/avatar/avatar-illustrated-01.webp" type="image/webp" />
-              <img src="./img/avatar/avatar-illustrated-01.png" alt="User name" />
-            </picture>
-          </span>
-          <div class="sidebar-user-info">
-            <span class="sidebar-user__title">Nafisa Sh.</span>
+        <a href="##" class="sidebar-user" style="padding: 10px;">
+          <!-- <span class="sidebar-user-img"> -->
+          <!-- </span> -->
+          <div class="sidebar-user-container">
+            <i data-feather="user" aria-hidden="true" class="sidebar-user-icon"></i>
+            <div class="sidebar-user-info">
+              <span class="sidebar-user__title">
+                <?php echo htmlspecialchars($agent_name); ?>
+              </span>
+            </div>
           </div>
+
         </a>
       </div>
     </aside>
