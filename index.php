@@ -21,6 +21,10 @@ try {
   $stmt->execute([$agent_email]);
   $payment_link = $stmt->fetchColumn();
 
+  $stmt = $pdo->prepare("SELECT balance FROM agents WHERE email = ?");
+  $stmt->execute([$agent_email]);
+  $balance = $stmt->fetchColumn();
+
   // Fetch the total number of withdrawals for the agent
   $stmt = $pdo->prepare("SELECT COUNT(*) AS total_withdrawals FROM agents_withdrawal WHERE agent_email = ?");
   $stmt->execute([$agent_email]);
@@ -230,7 +234,7 @@ try {
                 <i data-feather="credit-card" aria-hidden="true"></i>
                 </div>
                 <div class="stat-cards-info">
-                  <p class="stat-cards-info__num">₦ <span>0</span></p>
+                  <p class="stat-cards-info__num">₦ <span><?php echo $balance ?></span></p>
                   <p class="stat-cards-info__title">Total Balance</p>
                 </div>
               </article>
@@ -257,7 +261,7 @@ try {
                   <p class="stat-cards-info__title">Copy referral link</p>
                   <div style="display: flex; align-items: center; gap: 10px;">
                     <input type="text" id="referralLink"
-                      value="https://s-martagent.onatechngc.com?code=<?php echo strtolower(htmlspecialchars($payment_link ?? 'N/A')); ?>"
+                      value="https://app.s-martpos.com?authc=<?php echo strtolower(htmlspecialchars($payment_link ?? 'N/A')); ?>"
                       readonly
                       style="border: none; background: transparent; font-size: 14px; width: 100%; cursor: default;">
                     <button onclick="copyReferralLink()"
