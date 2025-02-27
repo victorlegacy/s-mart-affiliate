@@ -138,7 +138,8 @@ try {
                             </ul>
                         </li>
                         <li>
-                            <a href="profile.php"><i data-feather="user" aria-hidden="true" class="icon"></i>
+                            <a class="active" href="profile.php"><i data-feather="user" aria-hidden="true"
+                                    class="icon"></i>
                                 Profile</a>
                         </li>
                         <li>
@@ -213,21 +214,32 @@ try {
             <!-- ! Main -->
             <main class="main users chart-page" id="skip-target">
                 <div class="container">
-                    <h2>Profile Information</h2>
-                    <table class="card">
-                        <tr>
-                            <th>Name:</th>
-                            <td><?php echo htmlspecialchars($agent['name']); ?></td>
-                        </tr>
-                        <tr>
-                            <th>Email:</th>
-                            <td><?php echo htmlspecialchars($agent['email']); ?></td>
-                        </tr>
-                        <tr>
-                            <th>Agent code:</th>
-                            <td><?php echo htmlspecialchars($agent['agent_code']); ?></td>
-                        </tr>
-                    </table>
+                    <h2 class="main-title">Profile Information</h2>
+
+                    <div class="col-lg-12">
+                        <form class="form">
+                            <label class="form-label-wrapper">
+                                <p class="form-label">Name</p>
+                                <input class="form-input" type="text"
+                                    value="<?php echo htmlspecialchars($agent['name']); ?>" readonly>
+                            </label>
+                            <label class="form-label-wrapper">
+                                <p class="form-label">Email</p>
+                                <input class="form-input" type="text"
+                                    value="<?php echo htmlspecialchars($agent['email']); ?>" readonly>
+                            </label>
+
+                            <label class="form-label-wrapper">
+                                <p class="form-label">Agent Code</p>
+                                <input class="form-input" type="text"
+                                    value="<?php echo htmlspecialchars($agent['agent_code']); ?>" readonly>
+                            </label>
+
+
+
+
+                        </form>
+                    </div>
             </main>
             <!-- ! Footer -->
             <footer class="footer">
