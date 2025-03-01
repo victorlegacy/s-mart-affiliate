@@ -10,35 +10,21 @@ if (!isset($_SESSION['agent_email'])) {
 
 $agent_email = $_SESSION['agent_email'];
 $agent_name = $_SESSION['agent_name'];
-$successMessage = "";
-$errorMessage = "";
+$agent_code = $_SESSION['code'];
+try {
+  // Create a new database connection
+  $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
+  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// Handle form submission
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $account_name = trim($_POST['account_name']);
-  $account_number = trim($_POST['account_number']);
-  $bank_name = trim($_POST['bank_name']);
-
-  if (empty($account_name) || empty($account_number) || empty($bank_name)) {
-    $errorMessage = "All fields are required.";
-  } else {
-    try {
-      $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
-      $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-      // Insert withdrawal request
-      $stmt = $pdo->prepare("INSERT INTO agents_withdrawal (account_name, account_number, bank_name, status, agent_email, created_at) VALUES (?, ?, ?, 'pending', ?, NOW())");
-      $stmt->execute([$account_name, $account_number, $bank_name, $agent_email]);
-
-      $successMessage = "Withdrawal request submitted successfully!";
-      echo "<script>alert('Withdrawal request submitted successfully!')</script>";
-      echo "<script>location.href='withdrawal-request.php'</script>";
-    } catch (PDOException $e) {
-      $errorMessage = "Database error: " . $e->getMessage();
-    }
-  }
+  // Fetch withdrawal requests for the logged-in agent
+  $stmt = $pdo->prepare("SELECT id,name,email,phone,premium,premium_price,createdAt FROM users WHERE agent = ? ORDER BY createdAt DESC");
+  $stmt->execute([$agent_code]);
+  $withdrawals = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+  die("Database error: " . $e->getMessage());
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -109,6 +95,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     text-overflow: ellipsis;
     /* Adds '...' if the name is too long */
   }
+  .text-green{
+    color: green;
+  }
 </style>
 
 <body>
@@ -135,22 +124,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <a href="index.php"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
             </li>
             <li>
-              <a href="clients.php"><i data-feather="users" aria-hidden="true" class="icon"></i>Clients</a>
+              <a href="clients.php" class="active"><i data-feather="users" aria-hidden="true" class="icon"></i>Clients</a>
             </li>
             <li>
-              <a class="show-cat-btn" href="##">
+              <a class="show-cat-btn " href="##">
                 <span class="icon document" aria-hidden="true"></span>Withdrawal
                 <span class="category__btn transparent-btn" title="Open list">
                   <span class="sr-only">Open list</span>
                   <span class="icon arrow-down" aria-hidden="true"></span>
                 </span>
               </a>
-              <ul class="cat-sub-menu active">
+              <ul class="cat-sub-menu">
                 <li>
-                  <a href="withdrawal-request.php" style="font-size: 12px">View Withdrawal Request</a>
+                  <a href="withdrawal-request.php"  style="font-size: 12px">View Withdrawal Request</a>
                 </li>
                 <li>
-                  <a href="request-withdrawal.php" class="active" style="font-size: 12px">Request For Withdrawal</a>
+                  <a href="request-withdrawal.php" style="font-size: 12px">Request For Withdrawal</a>
                 </li>
               </ul>
             </li>
@@ -198,6 +187,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <i class="moon-icon" data-feather="moon" aria-hidden="true"></i>
             </button>
 
+            <button class="theme-switcher gray-circle-btn" type="button" title="Switch theme">
+              <span class="sr-only">Switch theme</span>
+              <i class="sun-icon" data-feather="sun" aria-hidden="true"></i>
+              <i class="moon-icon" data-feather="moon" aria-hidden="true"></i>
+            </button>
+
             <div class="nav-user-wrapper">
               <button href="##" class="nav-user-btn dropdown-btn" title="My profile" type="button">
                 <span class="sr-only">My profile</span>
@@ -230,38 +225,79 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <!-- ! Main -->
       <main class="main users chart-page" id="skip-target">
         <div class="container">
-          <h2 class="main-title">Request Withdrawal</h2>
+          <h2 class="main-title">Clients</h2>
 
           <div class="row">
-            <?php if (!empty($successMessage)): ?>
-              <p style="color: green; text-align: center;"><?php echo $successMessage; ?></p>
-            <?php endif; ?>
-
-            <?php if (!empty($errorMessage)): ?>
-              <p style="color: red; text-align: center;"><?php echo $errorMessage; ?></p>
-            <?php endif; ?>
             <div class="col-lg-12">
-              <form class="form" action="" method="POST">
-                <label class="form-label-wrapper">
-                  <p class="form-label">Account Name</p>
-                  <input class="form-input" type="text" name="account_name" placeholder="Enter your account name"
-                    required>
-                </label>
-                <label class="form-label-wrapper">
-                  <p class="form-label">Account Number</p>
-                  <input class="form-input" type="text" name="account_number" placeholder="Enter your account number"
-                    required>
-                </label>
+              <div class="users-table table-wrapper">
+                <table class="posts-table">
+                  <thead>
+                    <tr class="users-table-info">
+                      <th>Client Name</th>
+                      <th>Client Details</th>
+                      <th>Earnings</th>
+                      <th>Date Registered</th>
+                      <!-- <th>Action</th> -->
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php if (!empty($withdrawals)): ?>
+                      <?php foreach ($withdrawals as $withdrawal): ?>
+                        <tr>
+                          <td>
+                            <p><?php echo htmlspecialchars($withdrawal['name']); ?></p>
+                            
+                          </td>
 
-                <label class="form-label-wrapper">
-                  <p class="form-label">Bank Name</p>
-                  <input class="form-input" type="text" name="bank_name" placeholder="Enter your bank name" required>
-                </label>
+                          <td>
+                          <p><?php echo htmlspecialchars($withdrawal['phone']); ?>
+                        <br>
+                        <?php echo htmlspecialchars($withdrawal['email']); ?>
+                    </p>
+                          </td>
 
+                          <td><?php if($withdrawal['premium'] == '1_month'){?> 
+                            User Package: <b>1 Month</b> Premium <br>
+                            Total Earnings: <span class="badge-approved text-green">₦ <?php echo number_format($withdrawal['premium_price']/3)?></span>
+                            <span class="badge-approved"><?php $withdrawal['premium_price']/3?></span>
+                            <?php }elseif($withdrawal['premium'] == '6_month'){?>
+                            User Package: <b>6 Months</b> Premium<br>
+                            Total Earnings: <span class="badge-approved text-green">₦ <?php echo number_format($withdrawal['premium_price']/3)?></span>
+                            <span class="badge-approved"><?php $withdrawal['premium_price']/3?></span>
+                            <?php }elseif($withdrawal['premium'] == '12_month'){?>
+                            User Package: <b>1 Year</b> Premium<br>
+                            Total Earnings: <span class="badge-approved text-green">₦ <?php echo number_format($withdrawal['premium_price']/3)?></span>
+                            <?php }else{ ?>
+                            User Package: <b>Free</b> <br>
+                            Total Earnings: <span class="badge-approved">0</span>
+                                <?php } ?>
+                            </td>
+                           
+                          <td><?php echo date("d.m.Y", strtotime($withdrawal['createdAt'])); ?></td>
+                          <!-- <td>
+                            <span class="p-relative">
+                              <button class="dropdown-btn transparent-btn" type="button" title="More info">
+                                <div class="sr-only">More info</div>
+                                <i data-feather="more-horizontal" aria-hidden="true"></i>
+                              </button>
+                              <ul class="users-item-dropdown dropdown">
+                                <li><a href="edit-withdrawal.php?id=<?php echo $withdrawal['id']; ?>">Edit</a></li>
+                                <li><a href="delete-withdrawal.php?id=<?php echo $withdrawal['id']; ?>"
+                                    onclick="return confirm('Are you sure?');">Delete</a></li>
+                              </ul>
+                            </span>
+                          </td> -->
+                        </tr>
+                      <?php endforeach; ?>
+                    <?php else: ?>
+                      <tr>
+                        <td colspan="5" style="text-align: center;">No Clients found.</td>
+                      </tr>
+                    <?php endif; ?>
+                  </tbody>
 
-                <br>
-                <button class="form-btn primary-default-btn transparent-btn" type="submit">Submit</button>
-              </form>
+                </table>
+              </div>
             </div>
           </div>
         </div>

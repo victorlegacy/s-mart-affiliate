@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       // Check if user exists
-      $stmt = $pdo->prepare("SELECT id, password, name FROM agents WHERE email = ?");
+      $stmt = $pdo->prepare("SELECT id, password, name,agent_code FROM agents WHERE email = ?");
       $stmt->execute([$email]);
       $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -27,6 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['agent_id'] = $user['id'];
         $_SESSION['agent_email'] = $email;
         $_SESSION['agent_name'] = $user['name'];
+        $_SESSION['code'] = $user['agent_code'];
 
         // Debugging: Check if session is set
 

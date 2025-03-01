@@ -121,6 +121,9 @@ try {
               <a href="index.php"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
             </li>
             <li>
+              <a href="clients.php"><i data-feather="users" aria-hidden="true" class="icon"></i>Clients</a>
+            </li>
+            <li>
               <a class="show-cat-btn active" href="##">
                 <span class="icon document" aria-hidden="true"></span>Withdrawal
                 <span class="category__btn transparent-btn" title="Open list">

@@ -10,7 +10,7 @@ if (!isset($_SESSION['agent_email'])) {
 
 $agent_email = $_SESSION['agent_email'];
 $agent_name = $_SESSION['agent_name'];
-
+$code = $_SESSION['code'];
 try {
   // Create a PDO connection
   $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
@@ -29,6 +29,10 @@ try {
   $stmt = $pdo->prepare("SELECT COUNT(*) AS total_withdrawals FROM agents_withdrawal WHERE agent_email = ?");
   $stmt->execute([$agent_email]);
   $total_withdrawals = $stmt->fetchColumn();
+
+  $stmt = $pdo->prepare("SELECT COUNT(*) AS clients FROM users WHERE agent = ?");
+  $stmt->execute([$code]);
+  $total_clients = $stmt->fetchColumn();
 
 } catch (PDOException $e) {
   die("Database error: " . $e->getMessage());
@@ -134,6 +138,10 @@ try {
               <a class="active" href="index.php"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
             </li>
             <li>
+              <a href="clients.php"><i data-feather="users" aria-hidden="true" class="icon"></i>
+                Clients</a>
+            </li>
+            <li>
               <a class="show-cat-btn" href="##">
               <i data-feather="arrow-down-circle" aria-hidden="true" class="icon"></i> Withdrawal
                 <span class="category__btn transparent-btn" title="Open list">
@@ -150,6 +158,7 @@ try {
                 </li>
               </ul>
             </li>
+           
             <li>
               <a href="profile.php"><i data-feather="user" aria-hidden="true" class="icon"></i>
                 Profile</a>
@@ -229,7 +238,7 @@ try {
           <h2 class="main-title">Dashboard</h2>
           <div class="row stat-cards">
             <div class="col-md-6 col-xl-4  mt-2">
-              <article class="stat-cards-item">
+              <article class="stat-cards-item" onclick="window.location.href='request-withdrawal.php';" style="cursor: pointer;">
                 <div class="stat-cards-icon warning">
                 <i data-feather="credit-card" aria-hidden="true"></i>
                 </div>
@@ -240,14 +249,14 @@ try {
               </article>
             </div>
             <div class="col-md-6 col-xl-4  mt-2">
-              <article class="stat-cards-item">
+              <article class="stat-cards-item" onclick="window.location.href='clients.php';" style="cursor: pointer;">
                 <div class="stat-cards-icon purple">
-                  <i data-feather="arrow-down-circle" ></i>
+                  <i data-feather="users" ></i>
                 </div>
                 <div class="stat-cards-info">
-                  <p class="stat-cards-info__num"><?php echo $total_withdrawals ?></p>
+                  <p class="stat-cards-info__num"><?php echo $total_clients ?></p>
                   <p class="stat-cards-info__title">
-                    Total Withdrawal Request
+                    Total Clients
                   </p>
                 </div>
               </article>
