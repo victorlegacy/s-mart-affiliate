@@ -35,7 +35,7 @@ try {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>S-MART Affiliate Dashboard| Dashboard</title>
   <!-- Favicon -->
-  <link rel="shortcut icon" href="./img/svg/logo.svg" type="image/x-icon" />
+  <link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
   <!-- Custom styles -->
   <link rel="stylesheet" href="./css/style.min.css" />
 </head>
@@ -181,10 +181,9 @@ try {
 
               <span class="icon menu-toggle--gray" aria-hidden="true"></span>
             </button>
-            <button class="theme-switcher gray-circle-btn" type="button" title="Switch theme">
-              <span class="sr-only">Switch theme</span>
-              <i class="sun-icon" data-feather="sun" aria-hidden="true"></i>
-              <i class="moon-icon" data-feather="moon" aria-hidden="true"></i>
+            <button class="gray-circle-btn" onclick="window.location.reload()" title="Reload page" type="button">
+       
+              <i  data-feather="refresh-ccw" aria-hidden="true"></i>
             </button>
 
             <button class="theme-switcher gray-circle-btn" type="button" title="Switch theme">
@@ -225,7 +224,8 @@ try {
       <!-- ! Main -->
       <main class="main users chart-page" id="skip-target">
         <div class="container">
-          <h2 class="main-title">Clients</h2>
+          <h2 class="main-title">Clients </h2>
+         
 
           <div class="row">
             <div class="col-lg-12">
@@ -241,6 +241,10 @@ try {
                     </tr>
                   </thead>
                   <tbody>
+                  <hr>
+                      <button class="gray-circle-btn" onclick="window.location.reload()" title="Reload page" type="button">
+       
+       <i  data-feather="refresh-ccw" aria-hidden="true"></i> Refresh     </button>
                     <?php if (!empty($withdrawals)): ?>
                       <?php foreach ($withdrawals as $withdrawal): ?>
                         <tr>
@@ -289,12 +293,18 @@ try {
                           </td> -->
                         </tr>
                       <?php endforeach; ?>
+                     
                     <?php else: ?>
                       <tr>
-                        <td colspan="5" style="text-align: center;">No Clients found.</td>
+                        <td colspan="5" style="text-align: center;">No Clients found. <hr>  
+                         <button class="gray-circle-btn" onclick="window.location.reload()" title="Reload page" type="button">
+       
+       <i  data-feather="refresh-ccw" aria-hidden="true"></i> Refresh      </button></td>
                       </tr>
                     <?php endif; ?>
+                  
                   </tbody>
+                 
 
                 </table>
               </div>

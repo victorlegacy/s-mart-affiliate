@@ -51,7 +51,7 @@ try {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>S-MART Affiliate Dashboard| Dashboard</title>
   <!-- Favicon -->
-  <link rel="shortcut icon" href="./img/svg/logo.svg" type="image/x-icon" />
+  <link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
   <!-- Custom styles -->
   <link rel="stylesheet" href="./css/style.min.css" />
 </head>
@@ -270,7 +270,7 @@ try {
                   <p class="stat-cards-info__title">Copy referral link</p>
                   <div style="display: flex; align-items: center; gap: 10px;">
                     <input type="text" id="referralLink"
-                      value="https://app.s-martpos.com?authc=<?php echo strtolower(htmlspecialchars($payment_link ?? 'N/A')); ?>"
+                      value="https://app.s-martpos.com/signup?authc=<?php echo strtolower(htmlspecialchars($payment_link ?? 'N/A')); ?>"
                       readonly
                       style="border: none; background: transparent; font-size: 14px; width: 100%; cursor: default;">
                     <button onclick="copyReferralLink()"
