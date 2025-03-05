@@ -7,6 +7,8 @@ $errorMessage = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $name = trim($_POST['name']);
   $email = trim($_POST['email']);
+  $phone = trim($_POST['phone']);
+
   $password = trim($_POST['password']);
   $address = trim($_POST['address']);
   $city = trim($_POST['city']);
@@ -14,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $localgovernment = trim($_POST['localgovernment']);
 
   // Validate required fields
-  if (empty($name) || empty($email) || empty($password) || empty($address) || empty($city) || empty($state) || empty($localgovernment)) {
+  if (empty($name) || empty($email) || empty($phone) || empty($password) || empty($address) || empty($city) || empty($state) || empty($localgovernment)) {
     $errorMessage = "All fields are required.";
   } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $errorMessage = "Invalid email format.";
@@ -49,8 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $agentCode = generateAgentCode($pdo);
 
         // Insert agent into database
-        $stmt = $pdo->prepare("INSERT INTO agents (name, email, address, city, state, localgovt, password, agent_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->execute([$name, $email, $address, $city, $state, $localgovernment, $hashedPassword, $agentCode]);
+        $stmt = $pdo->prepare("INSERT INTO agents (name, email, phone, address, city, state, localgovt, password, agent_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$name, $email, $phone ,$address, $city, $state, $localgovernment, $hashedPassword, $agentCode]);
 
         // $successMessage = "Registration successful! Your agent code is: " . $agentCode;
         $successMessage = "Registration successful!";
@@ -129,6 +131,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label class="form-label-wrapper">
           <p class="form-label">Email</p>
           <input name="email" class="form-input" type="email" placeholder="Enter your Email" required>
+        </label>
+        <label class="form-label-wrapper">
+          <p class="form-label">Phone</p>
+          <input name="phone" class="form-input" type="tel" placeholder="Enter your Phone Number" required>
         </label>
         <label class="form-label-wrapper">
           <p class="form-label">Create Password</p>
