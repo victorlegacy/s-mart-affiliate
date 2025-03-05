@@ -262,15 +262,15 @@ try {
 
                           <td><?php if($withdrawal['premium'] == '1_month'){?> 
                             User Package: <b>1 Month</b> Premium <br>
-                            Total Earnings: <span class="badge-approved text-green">₦ <?php echo number_format($withdrawal['premium_price']/3)?></span>
-                            <span class="badge-approved"><?php $withdrawal['premium_price']/3?></span>
+                            Total Earnings: <span class="badge-approved text-green">₦ <?php echo number_format($withdrawal['premium_price']*0.3)?></span>
+                            <span class="badge-approved"><?php $withdrawal['premium_price']*0.3?></span>
                             <?php }elseif($withdrawal['premium'] == '6_month'){?>
                             User Package: <b>6 Months</b> Premium<br>
-                            Total Earnings: <span class="badge-approved text-green">₦ <?php echo number_format($withdrawal['premium_price']/3)?></span>
-                            <span class="badge-approved"><?php $withdrawal['premium_price']/3?></span>
+                            Total Earnings: <span class="badge-approved text-green">₦ <?php echo number_format($withdrawal['premium_price']*0.3)?></span>
+                            <span class="badge-approved"><?php $withdrawal['premium_price']*0.3?></span>
                             <?php }elseif($withdrawal['premium'] == '12_month'){?>
                             User Package: <b>1 Year</b> Premium<br>
-                            Total Earnings: <span class="badge-approved text-green">₦ <?php echo number_format($withdrawal['premium_price']/3)?></span>
+                            Total Earnings: <span class="badge-approved text-green">₦ <?php echo number_format($withdrawal['premium_price']*0.3)?></span>
                             <?php }else{ ?>
                             User Package: <b>Free</b> <br>
                             Total Earnings: <span class="badge-approved">0</span>
