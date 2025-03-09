@@ -120,7 +120,8 @@ try {
                             <a href="index.php"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
                         </li>
                         <li>
-                        <a href="clients.php" ><i data-feather="users" aria-hidden="true" class="icon"></i>Clients</a>
+                            <a href="clients.php"><i data-feather="users" aria-hidden="true"
+                                    class="icon"></i>Clients</a>
                         </li>
                         <li>
                             <a class="show-cat-btn" href="##">
@@ -138,6 +139,22 @@ try {
                                     <a href="request-withdrawal.php" class="active" style="font-size: 12px">Request For
                                         Withdrawal</a>
                                 </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="show-cat-btn" href="##">
+                                <i data-feather="users" aria-hidden="true" class="icon"></i>Community
+                                <span class="category__btn transparent-btn" title="Open list">
+                                    <span class="sr-only">Open list</span>
+                                    <span class="icon arrow-down" aria-hidden="true"></span>
+                                </span>
+                            </a>
+                            <ul class="cat-sub-menu">
+                                <li>
+                                    <a href="https://chat.whatsapp.com/IDH0u43syKp5aZlmvzLCUW " target="_blank"
+                                        style="font-size: 12px">Join group</a>
+                                </li>
+
                             </ul>
                         </li>
                         <li>
