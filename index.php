@@ -143,7 +143,7 @@ try {
             </li>
             <li>
               <a class="show-cat-btn" href="##">
-              <i data-feather="arrow-down-circle" aria-hidden="true" class="icon"></i> Withdrawal
+                <i data-feather="arrow-down-circle" aria-hidden="true" class="icon"></i> Withdrawal
                 <span class="category__btn transparent-btn" title="Open list">
                   <span class="sr-only">Open list</span>
                   <span class="icon arrow-down" aria-hidden="true"></span>
@@ -158,7 +158,24 @@ try {
                 </li>
               </ul>
             </li>
-           
+
+            <li>
+              <a class="show-cat-btn" href="##">
+                <i data-feather="users" aria-hidden="true" class="icon"></i>Community
+                <span class="category__btn transparent-btn" title="Open list">
+                  <span class="sr-only">Open list</span>
+                  <span class="icon arrow-down" aria-hidden="true"></span>
+                </span>
+              </a>
+              <ul class="cat-sub-menu">
+                <li>
+                  <a href="https://chat.whatsapp.com/IDH0u43syKp5aZlmvzLCUW " target="_blank"
+                    style="font-size: 12px">Join group</a>
+                </li>
+
+              </ul>
+            </li>
+
             <li>
               <a href="profile.php"><i data-feather="user" aria-hidden="true" class="icon"></i>
                 Profile</a>
@@ -238,9 +255,10 @@ try {
           <h2 class="main-title">Dashboard</h2>
           <div class="row stat-cards">
             <div class="col-md-6 col-xl-4  mt-2">
-              <article class="stat-cards-item" onclick="window.location.href='request-withdrawal.php';" style="cursor: pointer;">
+              <article class="stat-cards-item" onclick="window.location.href='request-withdrawal.php';"
+                style="cursor: pointer;">
                 <div class="stat-cards-icon warning">
-                <i data-feather="credit-card" aria-hidden="true"></i>
+                  <i data-feather="credit-card" aria-hidden="true"></i>
                 </div>
                 <div class="stat-cards-info">
                   <p class="stat-cards-info__num">₦ <span><?php echo $balance ?></span></p>
@@ -251,7 +269,7 @@ try {
             <div class="col-md-6 col-xl-4  mt-2">
               <article class="stat-cards-item" onclick="window.location.href='clients.php';" style="cursor: pointer;">
                 <div class="stat-cards-icon purple">
-                  <i data-feather="users" ></i>
+                  <i data-feather="users"></i>
                 </div>
                 <div class="stat-cards-info">
                   <p class="stat-cards-info__num"><?php echo $total_clients ?></p>
@@ -272,7 +290,8 @@ try {
                     <input type="text" id="referralLink"
                       value="https://app.s-martpos.com/signup?authc=<?php echo strtolower(htmlspecialchars($payment_link ?? 'N/A')); ?>"
                       readonly
-                      style="border: none; background: transparent; font-size: 14px; width: 100%; cursor: default;">
+                      style="border: none; background: transparent; font-size: 14px; width: 100%; cursor: default;"
+                      class="stat-cards-info__num">
                     <button onclick="copyReferralLink()"
                       style="padding: 5px 10px; font-size: 12px; background: #4CAF50; color: white; border: none; cursor: pointer;">Copy</button>
                   </div>
